@@ -3,6 +3,7 @@ module Decoder_tb;
     reg A,B;
     wire [1:0] out;
     Decoder Dec_inst(.A(A),.B(B),.out(out));
+    
     initial begin
         A=0; B=0;
         #10 
@@ -14,7 +15,9 @@ module Decoder_tb;
         #10 
         $finish;
     end
+    
     initial begin
       $monitor("A=%d B=%d, out=%d%d",A,B,out[1],out[0]);
     end
+    
 endmodule
