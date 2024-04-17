@@ -7,7 +7,8 @@
 #include "system.h"
 
 void print_minios(char* str);
-
+void today();
+int create_process();
 int main() {
     print_minios("[MiniOS SSU] Hello, World!");
 
