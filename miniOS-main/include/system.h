@@ -3,7 +3,9 @@
 //SSU struct task_struct {
 
 void minisystem();
-void add(char *, char *);
-void Fork();
-void IPC();
-void Est_PI();
+
+int add();
+
+double montecarlo_pi();
+
+void roundRobinScheduler();

@@ -3,25 +3,27 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-int Fork() {
-	pid_t pid;
-	// fork a child process
-	pid = fork();
+int fork_hello() {
+    pid_t pid;
 
-	if (pid < 0) {
-		fprintf(stderr, "Fork Failed\n");
-		return 1;
-	}
+    // fork a child
+    pid = fork();
 
-	else if (pid == 0) {
-		execlp("/bin/ls", "ls", NULL);
-	}
+    if (pid < 0) // error occured file fork
+    {
+        fprintf(stderr, "fork failed");
+        return 1;
+    }
+    else if (pid == 0) // child process
+    {
+        // execlp("/bin/ls","ls",NULL);
+        printf("hello world from child!\n");
+    }
+    else
+    {
+        wait(NULL);
+        printf("Child Complete. child PID: %d\n",pid);
+    }
 
-	else {
-		// parent will wait for the child to complete
-		wait(NULL);
-		printf("Child Complete\n");
-	}
-
-	return 0;
+    return 0;
 }
