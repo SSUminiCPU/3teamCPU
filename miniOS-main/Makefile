@@ -1,8 +1,8 @@
 # Compiler and Compiler Flags
 CC=gcc
-CFLAGS=-Wall -g -Iinclude `pkg-config --cflags gtk+-3.0`
+CFLAGS=-Wall -g -Iinclude $(shell pkg-config --cflags gtk+-3.0)
 # Linker flags
-LDFLAGS=-lreadline -lpthread `pkg-config --libs gtk+-3.0`
+LDFLAGS=-lreadline -lpthread $(shell pkg-config --libs gtk+-3.0)
 
 # The build target executable:
 TARGET=minios
@@ -17,7 +17,7 @@ INCLUDE_DIR=include
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LDFLAGS)
 
 # To obtain object files
 %.o: %.c
