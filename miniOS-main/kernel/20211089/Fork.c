@@ -1,42 +1,29 @@
-#include <studio.h>
+#include <sys/types.h>
+#include <stdio.h>
 #include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
+#include <sys/wait.h>
 
-#define Buffer_SIZE 25
-#define READ_END 0
-#define WRITE_END 1
+int fork_hello() {
+    pid_t pid;
 
-int create_process()
-{
-  char write_msg[Buffer_SIZE] = "Greetings";
-  char read_msg[Buffer_SIZE] ;
-  int fd[2], status;
-  pid_t pid;
-  if(pipe(fd)== -1){
-      fprintf(stderr,"Pipe failed");
-      return 1;
-  }
+    // fork a child
+    pid = fork();
 
+    if (pid < 0) // error occured file fork
+    {
+        fprintf(stderr, "fork failed");
+        return 1;
+    }
+    else if (pid == 0) // child process
+    {
+        // execlp("/bin/ls","ls",NULL);
+        printf("hello world from child!\n");
+    }
+    else
+    {
+        wait(NULL);
+        printf("Child Complete. child PID: %d\n",pid);
+    }
 
-  pid = fork();
-  if(pid<0){
-    fprintf(stderr, "fork Failed");
-    return 1;
-  }
-  else if (pid > 0) {
-    close(fd[READ_END]);
-    write(fd[WRITE_END],wirte_msg,strlen(write_msg)+1);
-    close(fd[WRITE_END]);
-    wait(&status);
-  }
-  else{
-    close(fd[WRITE_END]);
-    read(fd[READ_END],read_msg,Buffer_SIZE);
-    printf("read %s \n", read_msg);
-    close(fd[READ_END]);
-    exit(1);
-  }
-  return 0;
-
+    return 0;
 }
