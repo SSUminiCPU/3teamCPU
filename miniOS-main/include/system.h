@@ -1,11 +1,14 @@
-
 // include/linux/sched.h
 //SSU struct task_struct {
 
 void minisystem();
 
-int add();
+void up_down_game();
 
-double montecarlo_pi();
+void mini_fork();
 
-void roundRobinScheduler();
+int shm_com();
+
+int pipe_com();
+
+int monte_carlo();

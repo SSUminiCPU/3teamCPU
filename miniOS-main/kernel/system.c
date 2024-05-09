@@ -1,68 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
 #include <time.h>
-
-#define NUM_THREADS 64
-#define NUM_POINTS 1000000
-
-int circle_point_cnt = 0;
-pthread_mutex_t mutex;
-
-void *calculate_pi() {
-    unsigned int rand = time(NULL) + pthread_self();
-    int cnt = 0;
-
-    double x, y = 0.0;
-
-    for (int i = 0; i < (int) (NUM_POINTS / NUM_THREADS); i++) {
-        x = (double) rand_r(&rand) / RAND_MAX * 2 - 1;
-        y = (double) rand_r(&rand) / RAND_MAX * 2 - 1;
-
-        if (x * x + y * y <= 1) cnt++;
-    }
-
-    pthread_mutex_lock(&mutex);
-    circle_point_cnt += cnt;
-    pthread_mutex_unlock(&mutex);
-
-    pthread_exit(0);
-
-}
 
 void minisystem()
 {
     printf("minisystem\n");
 }
 
-int add()
-{
-    int a,b;
-    
-    printf("enter first integer...  ");
-    scanf("%d", &a);
+void up_down_game() {
+  srand(time(NULL));
 
-    printf("enter second integer...  ");
-    scanf("%d", &b);
+  int randomNumber = (rand() % 20) + 1;
+  int num;
+  
+  while(1) {
+    printf("숫자를 입력하세요(1 ~ 20) : ");
+    scanf("%d", &num);
 
-    return a+b;
-}
-
-double montecarlo_pi() {
-    pthread_t threads[NUM_THREADS];
-    pthread_mutex_init(&mutex, NULL);
-
-    for (int i = 0; i < NUM_THREADS; i++) {
-        pthread_create(&threads[i], NULL, calculate_pi, NULL);
+    if (num < 1 || num > 20) {
+      printf("1 ~ 20 사이의 숫자를 입력하세요! \n");
+      continue;
     }
-
-    for (int i = 0; i < NUM_THREADS; i++) {
-        pthread_join(threads[i], NULL);
+    else if (randomNumber == num) {
+      printf("정답입니다! \n");
+      break;
     }
-
-    double res = (double) 4.0 * circle_point_cnt / NUM_POINTS;
-    circle_point_cnt = 0;
-    pthread_mutex_destroy(&mutex);
-
-    return res;
+    else if (randomNumber < num) {
+      printf("Down! \n");
+    }
+    else {
+      printf("Up! \n");
+    }
+  }
 }
