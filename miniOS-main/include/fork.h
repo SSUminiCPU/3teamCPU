@@ -1,1 +1,0 @@
-int fork_hello();
